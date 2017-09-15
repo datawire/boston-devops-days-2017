@@ -1,0 +1,9 @@
+# IntelliJ IDEA
+.idea
+
+# Python
+venv
+*.pyc
+
+# Forge
+forge.yaml

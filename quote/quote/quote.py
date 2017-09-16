@@ -13,11 +13,6 @@ HOSTNAME=os.getenv("HOSTNAME")
 from flask import Flask, jsonify, request, Response
 app = Flask(__name__)
 
-######## Quote storage
-#
-# Obviously, this would more typically involve a persistent backing store. That's not
-# really needed for a demo though.
-
 quotes = [
   "Abstraction is ever present.",
   "A late night does not make any sense.",
@@ -32,6 +27,7 @@ quotes = [
 ]
 
 ######## Utilities
+
 
 class RichStatus (object):
     def __init__(self, ok, **kwargs):
@@ -81,6 +77,7 @@ class RichStatus (object):
     def OK(self, **kwargs):
         return RichStatus(True, **kwargs)
 
+
 def standard_handler(f):
     func_name = getattr(f, '__name__', '<anonymous>')
 
@@ -115,7 +112,6 @@ def standard_handler(f):
 
     return wrapper
 
-######## REST endpoints
 
 ####
 # GET /health does a basic health check. It always returns a status of 200
@@ -129,6 +125,7 @@ def health():
 ####
 # GET / returns a random quote as the 'quote' element of a JSON dictionary. It 
 # always returns a status of 200.
+
 
 @app.route("/", methods=["GET"])
 @standard_handler
@@ -152,6 +149,7 @@ def statement():
 #   the GET verb for this endpoint.
 # - If something goes wrong, it returns a JSON dictionary with an explanation
 #   of what happened as the 'error' element, with status 400.
+
 
 @app.route("/quote/<idx>", methods=["GET", "PUT"])
 @standard_handler
@@ -184,6 +182,7 @@ def specific_quote(idx):
 # - If something goes wrong, it returns a JSON dictionary with an explanation
 #   of what happened as the 'error' element, with status 400.
 
+
 @app.route("/quote", methods=["POST"])
 @standard_handler
 def new_quote():
@@ -198,7 +197,6 @@ def new_quote():
 
     return RichStatus.OK(quote=quotes[idx], quoteid=idx)
 
-######## Mainline
 
 def main():
     app.run(debug=True, host="0.0.0.0", port=PORT)

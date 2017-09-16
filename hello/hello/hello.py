@@ -11,8 +11,9 @@ app = Flask(__name__)
 # SUPPLEMENTAL CODE
 # ----------------------------------------------------------------------------------------------------------------------
 
-#@app.route("/quote", methods=["GET"])
-#def hello_with_quote():
+@app.route("/quote", methods=["GET"])
+def hello_with_quote():
+    pass
 #    import urllib.request
 #    import json
 #

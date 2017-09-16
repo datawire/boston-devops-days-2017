@@ -13,17 +13,16 @@ app = Flask(__name__)
 
 @app.route("/quote", methods=["GET"])
 def hello_with_quote():
-    pass
-#    import urllib.request
-#    import json
-#
-#    res = urllib.request.urlopen("http://qotm")
-#    data = res.read()
-#
-#    return jsonify(message="Hello from Kubernetes!",
-#                   quote=json.loads(data.decode('utf-8')),
-#                   hostname=os.getenv("HOSTNAME"),
-#                   time=datetime.datetime.now().isoformat())
+    import urllib.request
+    import json
+
+    res = urllib.request.urlopen("http://quote")
+    data = res.read()
+
+    return jsonify(message="Hello from Kubernetes!",
+                   quote=json.loads(data.decode('utf-8')),
+                   hostname=os.getenv("HOSTNAME"),
+                   time=datetime.datetime.now().isoformat())
 
 
 @app.route("/", methods=["GET"])

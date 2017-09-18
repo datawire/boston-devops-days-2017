@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ service.name }}
 spec:
-  type: LoadBalancer
+  type: NodePort  
   selector:
     app: {{ service.name }}
   ports:

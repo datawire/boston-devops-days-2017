@@ -15,6 +15,7 @@ env:
     - SCOUT_DISABLE=1
     - KUBECTL_VERSION=1.7.5    
     - FORGE_VERSION=0.3
+    - KUBE_DNS_NAME=bdd.datawire.io
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_a5fc079e249b_key -iv $encrypted_a5fc079e249b_iv -in secrets.tar.enc -out secrets.tar -d
@@ -32,3 +33,12 @@ install:
   - kubectl version
   - kubectl cluster-info
   - forge --version
+
+script:
+  - forge deploy --namespace=staging
+  - sleep 10s
+  - export HELLO_PORT="$(kubectl get service -n staging hello -o jsonpath='{.spec.ports[0].nodePort}')"
+  - echo $HELLO_PORT
+  - curl -4v "http://${KUBE_DNS_NAME}:${HELLO_PORT}/"
+  - curl -4v "http://${KUBE_DNS_NAME}:${HELLO_PORT}/quote"
+  - forge deploy --namespace=prod

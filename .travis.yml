@@ -29,5 +29,6 @@ install:
   - chmod a+x ${TOOLS_DIR}/forge
   - curl -L --output ${TOOLS_DIR}/kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
   - chmod a+x ${TOOLS_DIR}/kubectl
-  - kubectl --version
+  - kubectl version
+  - kubectl cluster-info
   - forge --version

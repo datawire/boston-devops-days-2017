@@ -16,7 +16,7 @@ env:
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_a5fc079e249b_key -iv $encrypted_a5fc079e249b_iv -in secrets.tar.enc -out secrets.tar -d
-  - tar -xvf /secrets.tar
+  - tar -xvf secrets.tar
   - chmod 644 forge.yaml kubernaut
   - mkdir -p ${HOME}/.kube
   - mv kubernaut ${HOME}/.kube/kubernaut

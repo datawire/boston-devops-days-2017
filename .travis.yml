@@ -9,6 +9,8 @@ services:
 
 env:
   global:
+    - TOOLS_DIR=${HOME}/bin
+    - PATH="${TOOLS_DIR}:${PATH}"
     - KUBECONFIG="${HOME}/.kube/kubernaut"
     - SCOUT_DISABLE=1
     - KUBECTL_VERSION=1.7.5    
@@ -19,14 +21,13 @@ before_install:
   - tar -xvf secrets.tar
   - chmod 644 forge.yaml kubernaut
   - mkdir -p ${HOME}/.kube
+  - mkdir -p ${TOOLS_DIR}
   - mv kubernaut ${HOME}/.kube/kubernaut
 
 install:
-  - curl https://s3.amazonaws.com/datawire-static-files/forge/$FORGE_VERSION/forge -o /tmp/forge
-  - chmod a+x /tmp/forge
-  - mv /tmp/forge /usr/local/bin
-  - curl -L --output /tmp/kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
-  - mv /tmp/kubectl /usr/local/bin
-  - chmod +x /usr/local/bin/kubectl
+  - curl https://s3.amazonaws.com/datawire-static-files/forge/$FORGE_VERSION/forge -o ${TOOLS_DIR}/forge
+  - chmod a+x ${TOOLS_DIR}/forge
+  - curl -L --output ${TOOLS_DIR}/kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+  - chmod a+x ${TOOLS_DIR}/kubectl
   - kubectl --version
   - forge --version

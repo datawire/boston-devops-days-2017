@@ -130,7 +130,7 @@ def health():
 @app.route("/", methods=["GET"])
 @standard_handler
 def statement():
-    return RichStatus.OK(quote=random.choice(quotes))
+    return RichStatus.OK(quote=random.choice(quotes), ns=os.getenv("POD_NAMESPACE"))
 
 ####
 # GET /quote/quoteid returns a specific quote. 'quoteid' is the integer index
@@ -195,7 +195,7 @@ def new_quote():
 
     idx = len(quotes) - 1
 
-    return RichStatus.OK(quote=quotes[idx], quoteid=idx)
+    return RichStatus.OK(quote=quotes[idx], quoteid=idx, ns=os.getenv("POD_NAMESPACE"))
 
 
 def main():

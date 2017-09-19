@@ -16,10 +16,11 @@ def hello_with_quote():
     import urllib.request
     import json
 
-    res = urllib.request.urlopen("http://quote")
+    res = urllib.request.urlopen("http://quote.{}".format(os.getenv("POD_NAMESPACE")))
     data = res.read()
 
     return jsonify(message="Hello from Kubernetes!",
+                   ns=os.getenv("POD_NAMESPACE"),
                    quote=json.loads(data.decode('utf-8')),
                    hostname=os.getenv("HOSTNAME"),
                    time=datetime.datetime.now().isoformat())
